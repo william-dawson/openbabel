@@ -3567,6 +3567,7 @@ namespace OpenBabel
             force = GetGradient(&*a) + _constraints.GetGradient(a->GetIdx());
           else
             force = NumericalDerivative(&*a) + _constraints.GetGradient(a->GetIdx());
+          coordIdx = (a->GetIdx() - 1) * 3;
 
           // a(i+1) = F(i+1) / m
           accel = force / (1000 * a->GetAtomicMass());
