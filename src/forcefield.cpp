@@ -3556,9 +3556,13 @@ namespace OpenBabel
           _velocityPtr[coordIdx]   += 0.5 * accel.x() * _timestep;
           _velocityPtr[coordIdx+1] += 0.5 * accel.y() * _timestep;
           _velocityPtr[coordIdx+2] += 0.5 * accel.z() * _timestep;
+        }
+      }
+      
+      Energy(true); // compute gradients
 
-          Energy(true); // compute gradients
-
+      FOR_ATOMS_OF_MOL (a, _mol) {
+        if (!_constraints.IsFixed(a->GetIdx()) || (_fixAtom == a->GetIdx()) || (_ignoreAtom == a->GetIdx())) {
           if (HasAnalyticalGradients())
             force = GetGradient(&*a) + _constraints.GetGradient(a->GetIdx());
           else
